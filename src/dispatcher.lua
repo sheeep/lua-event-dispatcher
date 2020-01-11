@@ -28,8 +28,8 @@ end
 function Dispatcher:dispatch(name, event)
     local listeners = self:getListeners(name)
 
-    for key, value in pairs(listeners) do
-        value(event)
+    for key, listener in pairs(listeners) do
+        pcall(listener, event)
     end
 end
 
