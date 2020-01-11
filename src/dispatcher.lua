@@ -57,7 +57,7 @@ end
 function Dispatcher:dispatch(name, event)
     local listeners = self:getListeners(name)
 
-    for key, listener in pairs(listeners) do
+    for _, listener in ipairs(listeners) do
         pcall(listener, event)
 
         if event.isPropagationStopped then
