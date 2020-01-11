@@ -28,7 +28,7 @@ function Dispatcher:addListener(eventName, listener)
 
     local list = self.listeners[eventName]
 
-    self.listeners[eventName][#list + 1] = listener
+    table.insert(list, listener)
 end
 
 
@@ -43,7 +43,7 @@ function Dispatcher:removeListener(eventName, listener)
 
     for key, registeredListener in pairs(listeners) do
         if registeredListener == listener then
-            listeners[key] = nil
+            table.remove(listeners, key)
         end
     end
 end
