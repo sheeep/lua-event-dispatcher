@@ -8,7 +8,7 @@ source = {
 
 description = {
     summary = "An event dispatcher component for Lua",
-    homepage = "https://github.com/ledgetech/lua-resty-http",
+    homepage = "https://github.com/sheeep/lua-event-dispatcher",
     license = "MIT",
     maintainer = "Jim Schmid <jim.schmid@1up.io>"
 }
