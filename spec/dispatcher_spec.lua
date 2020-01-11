@@ -116,4 +116,17 @@ describe("Event dispatcher", function()
 
         assert.same(1, event.data.number)
     end)
+
+    it("should be possible to have multiple dispatchers (event busses)", function()
+        local dispatcher1 = Dispatcher:new()
+        local dispatcher2 = Dispatcher:new()
+
+        local listener = function(event) end
+
+        dispatcher1:addListener("event-name", listener)
+        dispatcher2:addListener("event-name", listener)
+
+        assert.same(1, #dispatcher1:getListeners("event-name"))
+        assert.same(1, #dispatcher2:getListeners("event-name"))
+    end)
 end)
