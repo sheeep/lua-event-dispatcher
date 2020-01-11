@@ -28,6 +28,16 @@ describe("Event dispatcher", function()
         assert.same(2, #dispatcher:getListeners("event-name"))
     end)
 
+    it("should be possible to register a listener to multiple events", function ()
+        local dispatcher = Dispatcher:new()
+
+        dispatcher:addListener("event-name-1", function() end)
+        dispatcher:addListener("event-name-2", function() end)
+
+        assert.same(1, #dispatcher:getListeners("event-name-1"))
+        assert.same(1, #dispatcher:getListeners("event-name-2"))
+    end)
+
     it("should not be possible to register non-callable listeners", function()
         local dispatcher = Dispatcher:new()
 
@@ -54,14 +64,19 @@ describe("Event dispatcher", function()
 
     it("should be possible to remove a listener", function()
         local dispatcher = Dispatcher:new()
-        local listener = function(event)
-            event.value = 2
-        end
 
-        dispatcher:addListener("event-name", listener)
+        local listener1 = function(event) end
+        local listener2 = function(event) end
+
+        dispatcher:addListener("event-name", listener1)
+        dispatcher:addListener("event-name", listener2)
+        assert.same(2, #dispatcher:getListeners("event-name"))
+
+        dispatcher:removeListener("event-name", listener1)
+
         assert.same(1, #dispatcher:getListeners("event-name"))
 
-        dispatcher:removeListener("event-name", listener)
+        dispatcher:removeListener("event-name", listener2)
         assert.same(0, #dispatcher:getListeners("event-name"))
     end)
 end)
