@@ -6,6 +6,7 @@ function Event:new (data)
     local state = {
         isDispatched = false,
         isPropagationStopped = false,
+
         data = data
     }
 
@@ -13,10 +14,6 @@ function Event:new (data)
     self.__index = self
 
     return state
-end
-
-function Event:isDispatched()
-    return self.dispatched
 end
 
 return Event
