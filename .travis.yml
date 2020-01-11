@@ -9,7 +9,6 @@ env:
   - LUA="luajit 2.1"
 
 before_install:
-  - pip install codecov
   - pip install hererocks
   - hererocks lua_install --$LUA -r latest
   - source lua_install/bin/activate
@@ -23,4 +22,3 @@ script:
 
 after_script:
   - luacov
-  - codecov -X gcov
