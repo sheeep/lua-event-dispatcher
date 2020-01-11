@@ -11,22 +11,47 @@ function Dispatcher:new ()
     return state
 end
 
-function Dispatcher:addListener(name, listener)
+-- Add a new listener to the dispatcher
+--
+-- @param string eventName
+-- @param callable listener
+--
+-- @return nil
+function Dispatcher:addListener(eventName, listener)
     if type(listener) ~= "function" then
         error("A registered listener must be callable")
     end
 
-    if self.listeners[name] == nil then
-        self.listeners[name] = {}
+    if self.listeners[eventName] == nil then
+        self.listeners[eventName] = {}
     end
 
-    local list = self.listeners[name]
+    local list = self.listeners[eventName]
 
-    self.listeners[name][#list + 1] = listener
+    self.listeners[eventName][#list + 1] = listener
+end
+
+
+-- Remove a specific listener from the table
+--
+-- @param string eventName
+-- @param callable listener
+--
+-- @return nil
+function Dispatcher:removeListener(eventName, listener)
+    local listeners = self:getListeners(eventName)
+
+    for key, registeredListener in pairs(listeners) do
+        if registeredListener == listener then
+            listeners[key] = nil
+        end
+    end
 end
 
 function Dispatcher:getListeners(name)
-    return self.listeners[name]
+    local listeners = self.listeners[name] or {}
+
+    return listeners
 end
 
 function Dispatcher:dispatch(name, event)

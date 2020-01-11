@@ -51,4 +51,17 @@ describe("Event dispatcher", function()
 
         assert.same(2, event.value)
     end)
+
+    it("should be possible to remove a listener", function()
+        local dispatcher = Dispatcher:new()
+        local listener = function(event)
+            event.value = 2
+        end
+
+        dispatcher:addListener("event-name", listener)
+        assert.same(1, #dispatcher:getListeners("event-name"))
+
+        dispatcher:removeListener("event-name", listener)
+        assert.same(0, #dispatcher:getListeners("event-name"))
+    end)
 end)
