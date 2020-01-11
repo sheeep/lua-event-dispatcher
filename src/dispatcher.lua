@@ -60,6 +60,8 @@ function Dispatcher:dispatch(name, event)
     for key, listener in pairs(listeners) do
         pcall(listener, event)
     end
+
+    event.isDispatched = true
 end
 
 return Dispatcher

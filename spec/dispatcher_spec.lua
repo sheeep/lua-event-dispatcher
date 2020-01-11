@@ -3,6 +3,7 @@ require "busted.runner"()
 
 -- Modules
 local Dispatcher = require "dispatcher"
+local Event = require "event"
 
 describe("Event dispatcher", function()
     it("should be createable", function()
@@ -46,22 +47,6 @@ describe("Event dispatcher", function()
         end, "A registered listener must be callable")
     end)
 
-    it("should be possible for a listener to be callend", function()
-        local dispatcher = Dispatcher:new()
-
-        dispatcher:addListener("event-name", function(event)
-            event.value = 2
-        end)
-
-        local event = {
-            value = 1
-        }
-
-        dispatcher:dispatch("event-name", event)
-
-        assert.same(2, event.value)
-    end)
-
     it("should be possible to remove a listener", function()
         local dispatcher = Dispatcher:new()
 
@@ -78,5 +63,34 @@ describe("Event dispatcher", function()
 
         dispatcher:removeListener("event-name", listener2)
         assert.same(0, #dispatcher:getListeners("event-name"))
+    end)
+
+    it("should be possible to dispatch an Event object", function()
+        local dispatcher = Dispatcher:new()
+        local event1 = Event:new()
+        local event2 = Event:new()
+
+        dispatcher:addListener("event-name", function(event1) end)
+
+        dispatcher:dispatch("event-name", event1)
+
+        assert.truthy(event1.isDispatched)
+        assert.is_not.truthy(event2.isDispatched)
+    end)
+
+    it("should be possible to pass data within an Event object", function()
+        local dispatcher = Dispatcher:new()
+        local event = Event:new({
+            changed = false
+        })
+
+        dispatcher:addListener("event-name", function(event)
+            event.data.changed = true
+        end)
+
+        dispatcher:dispatch("event-name", event)
+
+        assert.truthy(event.data)
+        assert.truthy(event.data.changed)
     end)
 end)
