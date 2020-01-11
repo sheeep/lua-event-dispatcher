@@ -14,7 +14,7 @@ describe("Event dispatcher", function()
     it("should be possible to register a single listener", function()
         local dispatcher = Dispatcher:new()
 
-        dispatcher:addListener("event-name", true)
+        dispatcher:addListener("event-name", function() end)
 
         assert.same(1, #dispatcher:getListeners("event-name"))
     end)
@@ -22,10 +22,18 @@ describe("Event dispatcher", function()
     it("should be possible to register multiple listeners", function()
         local dispatcher = Dispatcher:new()
 
-        dispatcher:addListener("event-name", true)
-        dispatcher:addListener("event-name", true)
+        dispatcher:addListener("event-name", function() end)
+        dispatcher:addListener("event-name", function() end)
 
         assert.same(2, #dispatcher:getListeners("event-name"))
+    end)
+
+    it("should not be possible to register non-callable listeners", function()
+        local dispatcher = Dispatcher:new()
+
+        assert.has_error(function()
+            dispatcher:addListener("event-name", true)
+        end, "A registered listener must be callable")
     end)
 
     it("should be possible for a listener to be callend", function()

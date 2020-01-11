@@ -12,6 +12,10 @@ function Dispatcher:new ()
 end
 
 function Dispatcher:addListener(name, listener)
+    if type(listener) ~= "function" then
+        error("A registered listener must be callable")
+    end
+
     if self.listeners[name] == nil then
         self.listeners[name] = {}
     end
