@@ -1,10 +1,10 @@
 local Dispatcher = {}
 
-function Dispatcher:new (state)
-    state = state or {
+function Dispatcher:new ()
+    local state = {
         listeners = {}
     }
-    
+
     setmetatable(state, self)
     self.__index = self
 
@@ -23,6 +23,14 @@ end
 
 function Dispatcher:getListeners(name)
     return self.listeners[name]
+end
+
+function Dispatcher:dispatch(name, event)
+    local listeners = self:getListeners(name)
+
+    for key, value in pairs(listeners) do
+        value(event)
+    end
 end
 
 return Dispatcher
