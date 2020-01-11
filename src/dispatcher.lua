@@ -1,5 +1,6 @@
 local Dispatcher = {}
 
+-- Create a new Dispatcher object
 function Dispatcher:new ()
     local state = {
         listeners = {}
@@ -31,7 +32,6 @@ function Dispatcher:addListener(eventName, listener)
     table.insert(list, listener)
 end
 
-
 -- Remove a specific listener from the table
 --
 -- @param string eventName
@@ -48,12 +48,24 @@ function Dispatcher:removeListener(eventName, listener)
     end
 end
 
-function Dispatcher:getListeners(name)
-    local listeners = self.listeners[name] or {}
+-- Get a list of listeners listening to a specific event
+--
+-- @param string eventName
+--
+-- @return table A list of listeners
+function Dispatcher:getListeners(eventName)
+    local listeners = self.listeners[eventName] or {}
 
     return listeners
 end
 
+-- Dispatch an event, preferably with an event object
+-- but it is possible to dispatch with any kind of data as an event
+--
+-- @param string eventName
+-- @param mixed event
+--
+-- @return nil
 function Dispatcher:dispatch(name, event)
     local listeners = self:getListeners(name)
 
