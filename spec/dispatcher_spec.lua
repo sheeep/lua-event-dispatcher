@@ -50,8 +50,8 @@ describe("Event dispatcher", function()
     it("should be possible to remove a listener", function()
         local dispatcher = Dispatcher:new()
 
-        local listener1 = function(event) end
-        local listener2 = function(event) end
+        local listener1 = function() end
+        local listener2 = function() end
 
         dispatcher:addListener("event-name", listener1)
         dispatcher:addListener("event-name", listener2)
@@ -70,7 +70,7 @@ describe("Event dispatcher", function()
         local event1 = Event:new()
         local event2 = Event:new()
 
-        dispatcher:addListener("event-name", function(event1) end)
+        dispatcher:addListener("event-name", function() end)
 
         dispatcher:dispatch("event-name", event1)
 
@@ -84,8 +84,8 @@ describe("Event dispatcher", function()
             changed = false
         })
 
-        dispatcher:addListener("event-name", function(event)
-            event.data.changed = true
+        dispatcher:addListener("event-name", function(e)
+            e.data.changed = true
         end)
 
         dispatcher:dispatch("event-name", event)
@@ -100,12 +100,12 @@ describe("Event dispatcher", function()
             number = 0
         })
 
-        local listener1 = function(event)
-            event.data.number = event.data.number + 1
-            event:stopPropagation()
+        local listener1 = function(e)
+            e.data.number = e.data.number + 1
+            e:stopPropagation()
         end
-        local listener2 = function(event)
-            event.data.number = event.data.number + 3
+        local listener2 = function(e)
+            e.data.number = e.data.number + 3
         end
 
         dispatcher:addListener("event-name", listener1)
@@ -121,7 +121,7 @@ describe("Event dispatcher", function()
         local dispatcher1 = Dispatcher:new()
         local dispatcher2 = Dispatcher:new()
 
-        local listener = function(event) end
+        local listener = function() end
 
         dispatcher1:addListener("event-name", listener)
         dispatcher2:addListener("event-name", listener)

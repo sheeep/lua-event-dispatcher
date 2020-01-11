@@ -1,1 +1,1 @@
-include_files = {"src"}
+include_files = {"src", "spec"}

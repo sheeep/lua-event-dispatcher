@@ -2,7 +2,6 @@
 require "busted.runner"()
 
 -- Modules
-local Dispatcher = require "dispatcher"
 local Event = require "event"
 
 describe("Event", function()
