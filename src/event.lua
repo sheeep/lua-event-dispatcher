@@ -16,4 +16,8 @@ function Event:new (data)
     return state
 end
 
+function Event:stopPropagation()
+    self.isPropagationStopped = true
+end
+
 return Event

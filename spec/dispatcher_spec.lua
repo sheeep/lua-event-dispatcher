@@ -93,4 +93,27 @@ describe("Event dispatcher", function()
         assert.truthy(event.data)
         assert.truthy(event.data.changed)
     end)
+
+    it("should be possible to stop the event propagation", function()
+        local dispatcher = Dispatcher:new()
+        local event = Event:new({
+            number = 0
+        })
+
+        local listener1 = function(event)
+            event.data.number = event.data.number + 1
+            event:stopPropagation()
+        end
+        local listener2 = function(event)
+            event.data.number = event.data.number + 3
+        end
+
+        dispatcher:addListener("event-name", listener1)
+        dispatcher:addListener("event-name", listener2)
+        dispatcher:addListener("event-name", listener2)
+
+        dispatcher:dispatch("event-name", event)
+
+        assert.same(1, event.data.number)
+    end)
 end)

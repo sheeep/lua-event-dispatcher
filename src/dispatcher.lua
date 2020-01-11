@@ -59,6 +59,10 @@ function Dispatcher:dispatch(name, event)
 
     for key, listener in pairs(listeners) do
         pcall(listener, event)
+
+        if event.isPropagationStopped then
+            break
+        end
     end
 
     event.isDispatched = true

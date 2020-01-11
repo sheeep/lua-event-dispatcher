@@ -34,12 +34,12 @@ describe("Event", function()
         assert.truthy(event.isDispatched)
     end)
 
-    it("should be possible to change the property isPropagationStopped", function()
+    it("should be possible to stop the propagation", function()
         local event = Event:new()
 
         assert.is_not.truthy(event.isPropagationStopped)
 
-        event.isPropagationStopped = true
+        event:stopPropagation()
 
         assert.truthy(event.isPropagationStopped)
     end)
