@@ -12,8 +12,14 @@ function Dispatcher:new()
     return state
 end
 
-function Dispatcher:on(eventName, listener)
-    self:addListener(eventName, listener)
+-- Add a new listener to the dispatcher
+--
+-- @param string eventName
+-- @param callable listener
+--
+-- @return nil
+function Dispatcher:on(eventName, listener, priority)
+    self:addListener(eventName, listener, priority)
 end
 
 -- Add a new listener to the dispatcher
@@ -22,16 +28,23 @@ end
 -- @param callable listener
 --
 -- @return nil
-function Dispatcher:addListener(eventName, listener)
+function Dispatcher:addListener(eventName, listener, priority)
     if type(listener) ~= "function" then
         error("A registered listener must be callable")
     end
+
+    -- set a default priority if nothing is provided
+    priority = priority or 0
 
     if self.listeners[eventName] == nil then
         self.listeners[eventName] = {}
     end
 
-    local list = self.listeners[eventName]
+    if self.listeners[eventName][priority] == nil then
+        self.listeners[eventName][priority] = {}
+    end
+
+    local list = self.listeners[eventName][priority]
 
     table.insert(list, listener)
 end
@@ -43,22 +56,41 @@ end
 --
 -- @return nil
 function Dispatcher:removeListener(eventName, listener)
-    local listeners = self:getListeners(eventName)
+    local priorityQueues = self.listeners[eventName]
 
-    for key, registeredListener in pairs(listeners) do
-        if registeredListener == listener then
-            table.remove(listeners, key)
+    for _, priorityQueue in pairs(priorityQueues) do
+        for key, registeredListener in pairs(priorityQueue) do
+            if registeredListener == listener then
+                table.remove(priorityQueue, key)
+            end
         end
     end
 end
 
--- Get a list of listeners listening to a specific event
+-- Get an ordered list of listeners listening to a specific event
 --
 -- @param string eventName
 --
 -- @return table A list of listeners
 function Dispatcher:getListeners(eventName)
-    local listeners = self.listeners[eventName] or {}
+    local priorityQueues = self.listeners[eventName] or {}
+
+    local listeners = {}
+    local keys = {}
+
+    for priority in pairs(priorityQueues) do
+        table.insert(keys, priority)
+    end
+
+    -- reverse iteration over priority keys
+    -- this way a priority of 0 will be executed before higher priorities
+    for i = #keys, 1, -1 do
+        local priority = keys[i]
+
+        for _, registeredListener in pairs(priorityQueues[priority]) do
+            table.insert(listeners, registeredListener)
+        end
+    end
 
     return listeners
 end
@@ -73,7 +105,7 @@ end
 function Dispatcher:dispatch(name, event)
     local listeners = self:getListeners(name)
 
-    for _, listener in ipairs(listeners) do
+    for _, listener in pairs(listeners) do
         pcall(listener, event)
 
         if event.isPropagationStopped then

@@ -15,12 +15,17 @@ $ luarocks install lua-event-dispatcher
 
 ## Usage
 
+Usage examples can be found in the `spec/` folder in form of tests.
+
+## Basic usage
+
 A simple example of how to use this library is the following one.
 
 ```lua
 local Dispatcher = require "event-dispatcher.Dispatcher"
 local Event = require "event-dispatcher.Event"
 
+-- Create an event dispatcher
 local dispatcher = Dispatcher:new()
 
 -- Create an event listener
@@ -30,15 +35,54 @@ end
 
 -- Register this listener to a specific event
 dispatcher:on("event-name", listener)
-dispatcher:addListener("event-name", listener)
 
--- Dispatch this event
+-- Create an event object with
 local event = Event:new({
   meep = 1
 })
 
 dispatcher:dispatch("event-name", event)
 ```
+
+## Event object
+
+The event object already contains a data table on the key `data` which
+can be used to store any arbitrary data. The same Event instance is passed
+to all the listeners. This allows for data to be changed along the way.
+
+The data passed to the constructor of the event object is stored as the
+initial data for this event.
+
+```lua
+
+local event = Event:new({
+    foo: true
+    bar: false
+})
+
+print(event.data.foo) -- true
+print(event.data.bar) -- false
+
+```
+
+## Priority queues
+
+Event listeners can be added with a specific priority.
+
+```lua
+
+dispatcher:on("event-name", listener, 32)
+dispatcher:on("event-name", listener, 64)
+
+-- You can add multiple listeners with the same priority
+dispatcher:on("event-name", listener, 128)
+dispatcher:on("event-name", listener, 128)
+```
+
+If no priority is given, an implicit priority of `0` will be used.
+Listeners with lower priorities will be executed *first*.
+
+## Stop propagation
 
 If for some reason you want to stop the propagation of the event
 in a listener, call the `stopPropagation` method to guarantee
