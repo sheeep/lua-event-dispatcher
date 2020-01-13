@@ -1,7 +1,7 @@
 local Dispatcher = {}
 
 -- Create a new Dispatcher object
-function Dispatcher:new ()
+function Dispatcher:new()
     local state = {
         listeners = {}
     }
@@ -10,6 +10,10 @@ function Dispatcher:new ()
     self.__index = self
 
     return state
+end
+
+function Dispatcher:on(eventName, listener)
+    self:addListener(eventName, listener)
 end
 
 -- Add a new listener to the dispatcher

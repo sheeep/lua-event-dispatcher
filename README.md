@@ -29,6 +29,7 @@ local listener = function (event)
 end
 
 -- Register this listener to a specific event
+dispatcher:on("event-name", listener)
 dispatcher:addListener("event-name", listener)
 
 -- Dispatch this event

@@ -129,4 +129,19 @@ describe("Event dispatcher", function()
         assert.same(1, #dispatcher1:getListeners("event-name"))
         assert.same(1, #dispatcher2:getListeners("event-name"))
     end)
+
+    it("should be possible to use the method :on instead of :addListener", function()
+        local dispatcher = Dispatcher:new()
+        local event = Event:new({
+            number = 0
+        })
+
+        dispatcher:on("event-name", function(e)
+            e.data.number = 1
+        end)
+
+        dispatcher:dispatch("event-name", event)
+
+        assert.same(1, event.data.number)
+    end)
 end)
