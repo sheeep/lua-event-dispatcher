@@ -6,10 +6,8 @@ function Dispatcher:new()
         listeners = {}
     }
 
-    setmetatable(state, self)
     self.__index = self
-
-    return state
+    return setmetatable(state, self)
 end
 
 -- Add a new listener to the dispatcher

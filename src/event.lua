@@ -10,10 +10,8 @@ function Event:new (data)
         data = data
     }
 
-    setmetatable(state, self)
     self.__index = self
-
-    return state
+    return setmetatable(state, self)
 end
 
 function Event:stopPropagation()
