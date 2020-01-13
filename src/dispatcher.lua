@@ -29,12 +29,11 @@ end
 --
 -- @return nil
 function Dispatcher:addListener(eventName, listener, priority)
-    if type(listener) ~= "function" then
-        error("A registered listener must be callable")
-    end
-
     -- set a default priority if nothing is provided
     priority = priority or 0
+
+    assert(type(listener) == "function", "A registered listener must be callable")
+    assert(type(priority) == "number", "priority must be a number")
 
     if self.listeners[eventName] == nil then
         self.listeners[eventName] = {}
