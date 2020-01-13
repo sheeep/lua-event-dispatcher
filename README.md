@@ -1,7 +1,8 @@
 # Lua Event Dispatcher
 
 This is an implementation of the Mediator pattern for Lua. It provides
-an event dispatcher and a generic event object.
+an event dispatcher and a generic event object, supports priorities,
+propagation stops and error safe executors.
 
 [![Build Status](https://travis-ci.com/sheeep/lua-event-dispatcher.svg?branch=master)](https://travis-ci.com/sheeep/lua-event-dispatcher)
 [![codecov](https://codecov.io/gh/sheeep/lua-event-dispatcher/branch/master/graph/badge.svg)](https://codecov.io/gh/sheeep/lua-event-dispatcher)
