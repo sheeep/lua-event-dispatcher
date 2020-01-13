@@ -108,3 +108,5 @@ end
 ## License
 This library is licensed under the MIT license.
 See the complete license text in the `LICENSE` file
+
+🌱
