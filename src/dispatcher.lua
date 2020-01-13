@@ -1,3 +1,5 @@
+local Event = require "event"
+
 local Dispatcher = {}
 
 -- Create a new Dispatcher object
@@ -101,10 +103,14 @@ end
 --
 -- @return nil
 function Dispatcher:dispatch(name, event)
+    if event == nil then
+        event = Event:new({})
+    end
+
     local listeners = self:getListeners(name)
 
     for _, listener in pairs(listeners) do
-        pcall(listener, event)
+        listener(event)
 
         if event.isPropagationStopped then
             break

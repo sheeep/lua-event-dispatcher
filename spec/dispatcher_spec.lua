@@ -65,7 +65,7 @@ describe("Event dispatcher", function()
         assert.same(0, #dispatcher:getListeners("event-name"))
     end)
 
-    it("should be possible to dispatch an Event object", function()
+    it("should be possible to dispatch an event object", function()
         local dispatcher = Dispatcher:new()
         local event1 = Event:new()
         local event2 = Event:new()
@@ -78,7 +78,16 @@ describe("Event dispatcher", function()
         assert.is_not.truthy(event2.isDispatched)
     end)
 
-    it("should be possible to pass data within an Event object", function()
+    it("should be possible to dispatch without an event object", function()
+        local dispatcher = Dispatcher:new()
+
+        dispatcher:addListener("event-name", function() end)
+        dispatcher:dispatch("event-name")
+
+        assert.truthy(true)
+    end)
+
+    it("should be possible to pass data within an event object", function()
         local dispatcher = Dispatcher:new()
         local event = Event:new({
             changed = false
@@ -115,6 +124,27 @@ describe("Event dispatcher", function()
         dispatcher:dispatch("event-name", event)
 
         assert.same(1, event.data.number)
+    end)
+
+    it("should be possible to stop the event propagation event without an event object", function()
+        local dispatcher = Dispatcher:new()
+        local a = 1
+
+        local listener1 = function(e)
+            e:stopPropagation()
+
+            a = 2
+        end
+        local listener2 = function(e)
+            a = 3
+        end
+
+        dispatcher:on("event-name", listener1)
+        dispatcher:on("event-name", listener2)
+
+        dispatcher:dispatch("event-name")
+
+        assert.same(2, a)
     end)
 
     it("should be possible to have multiple dispatchers (event busses)", function()
