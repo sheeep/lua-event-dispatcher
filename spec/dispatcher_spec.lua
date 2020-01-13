@@ -230,4 +230,12 @@ describe("Event dispatcher", function()
         assert.same(6, event.data.number)
         assert.is_not.same(12, event.data.number)
     end)
+
+    it("should not be possible to add a non-numeric priority", function()
+        local dispatcher = Dispatcher:new()
+
+        assert.has_error(function()
+            dispatcher:addListener("event-name", function() end, "NaN")
+        end, "priority must be a number")
+    end)
 end)
