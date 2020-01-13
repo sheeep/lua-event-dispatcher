@@ -29,7 +29,7 @@ describe("Event dispatcher", function()
         assert.same(2, #dispatcher:getListeners("event-name"))
     end)
 
-    it("should be possible to register a listener to multiple events", function ()
+    it("should be possible to register a listener to multiple events", function()
         local dispatcher = Dispatcher:new()
 
         dispatcher:on("event-name-1", function() end)
@@ -145,7 +145,7 @@ describe("Event dispatcher", function()
         assert.same(1, event.data.number)
     end)
 
-    it("should be possible to run listeners in order", function ()
+    it("should be possible to run listeners in order", function()
         local dispatcher = Dispatcher:new()
         local event = Event:new({
             number = 1
@@ -173,7 +173,7 @@ describe("Event dispatcher", function()
         assert.is_not.same(9, event.data.number)
     end)
 
-    it("should be possible to register multiple listeners for the same priority", function ()
+    it("should be possible to register multiple listeners for the same priority", function()
         local dispatcher = Dispatcher:new()
         local event = Event:new({
             number = 1

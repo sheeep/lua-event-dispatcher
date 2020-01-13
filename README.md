@@ -29,7 +29,7 @@ local Event = require "event-dispatcher.Event"
 local dispatcher = Dispatcher:new()
 
 -- Create an event listener
-local listener = function (event)
+local listener = function(event)
   event.data.meep = 2
 end
 
@@ -89,7 +89,7 @@ in a listener, call the `stopPropagation` method to guarantee
 that the current listener is the last one to run.
 
 ```lua
-local listener = function (event)
+local listener = function(event)
   event:stopPropagation()
 end
 ```
