@@ -116,7 +116,9 @@ function Dispatcher:dispatch(name, event)
         end
     end
 
-    event.isDispatched = true
+    if (type(event) == "table") then
+        event.isDispatched = true
+    end
 end
 
 return Dispatcher
