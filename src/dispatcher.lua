@@ -95,7 +95,7 @@ function Dispatcher:getListeners(eventName)
 end
 
 -- Dispatch an event, preferably with an event object
--- but it is possible to dispatch with any kind of data as an event
+-- but it is possible to dispatch with any kind of table as an event
 --
 -- @param string eventName
 -- @param mixed event
@@ -111,7 +111,7 @@ function Dispatcher:dispatch(name, event)
     for _, listener in pairs(listeners) do
         listener(event)
 
-        if event.isPropagationStopped then
+        if type(event) == "table" and event.isPropagationStopped then
             break
         end
     end
