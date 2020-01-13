@@ -54,7 +54,6 @@ The data passed to the constructor of the event object is stored as the
 initial data for this event.
 
 ```lua
-
 local event = Event:new({
     foo: true
     bar: false
@@ -62,8 +61,19 @@ local event = Event:new({
 
 print(event.data.foo) -- true
 print(event.data.bar) -- false
-
 ```
+
+You don't need to create and pass an event object yourself.
+
+```lua
+local dispatcher = Dispatcher:new()
+
+dispatcher:dispatch("something-happened")
+```
+
+Still, your listeners will receive an event object, where they can stop
+the propagation for example. The data table on such an implicit created
+event object is empty.
 
 ## Priority queues
 
