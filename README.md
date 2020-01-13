@@ -17,7 +17,7 @@ $ luarocks install lua-event-dispatcher
 
 Usage examples can be found in the `spec/` folder in form of tests.
 
-## Basic usage
+### Basic usage
 
 A simple example of how to use this library is the following one.
 
@@ -44,7 +44,7 @@ local event = Event:new({
 dispatcher:dispatch("event-name", event)
 ```
 
-## Event object
+### Event object
 
 The event object already contains a data table on the key `data` which
 can be used to store any arbitrary data. The same Event instance is passed
@@ -75,7 +75,7 @@ Still, your listeners will receive an event object, where they can stop
 the propagation for example. The data table on such an implicit created
 event object is empty.
 
-## Priority queues
+### Priority queues
 
 Event listeners can be added with a specific priority.
 
@@ -92,7 +92,7 @@ dispatcher:on("event-name", listener, 128)
 If no priority is given, an implicit priority of `0` will be used.
 Listeners with lower priorities will be executed *first*.
 
-## Stop propagation
+### Stop propagation
 
 If for some reason you want to stop the propagation of the event
 in a listener, call the `stopPropagation` method to guarantee
