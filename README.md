@@ -136,6 +136,17 @@ Dispatcher:new(function(listener, event)
 end)
 ```
 
+### Remove event listeners
+
+To remove event listeners from a given dispatcher, use one of the following
+methods.
+
+```
+dispatcher:removeListener("event", listener) -- Remove a specific listener from an event
+dispatcher:removeListeners("event") -- Remove all listeners from an event
+dispatcher:removeAllListeners() -- Clear the dispatcher from all registered events
+```
+
 ## License
 This library is licensed under the MIT license.
 See the complete license text in the `LICENSE` file
