@@ -18,6 +18,13 @@ $ luarocks install lua-event-dispatcher
 
 Usage examples can be found in the `spec/` folder in form of tests.
 
+* [Basic usage](#basic-usage)
+* [The event object](#event-object)
+* [Priority queues](#priority-queues)
+* [Stop propagation](#stop-propagation)
+* [Executors](#executors)
+* [Remove event listeners](#remove-event-listeners)
+
 ### Basic usage
 
 A simple example of how to use this library is the following one.
@@ -141,7 +148,7 @@ end)
 To remove event listeners from a given dispatcher, use one of the following
 methods.
 
-```
+```lua
 dispatcher:removeListener("event", listener) -- Remove a specific listener from an event
 dispatcher:removeListeners("event") -- Remove all listeners from an event
 dispatcher:removeAllListeners() -- Clear the dispatcher from all registered events
