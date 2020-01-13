@@ -135,7 +135,7 @@ describe("Event dispatcher", function()
 
             a = 2
         end
-        local listener2 = function(e)
+        local listener2 = function()
             a = 3
         end
 
