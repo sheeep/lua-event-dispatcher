@@ -1,11 +1,17 @@
 local Event = require "event"
+local defaultExecutor = require "executor/direct"
 
 local Dispatcher = {}
 
 -- Create a new Dispatcher object
-function Dispatcher:new()
+function Dispatcher:new(executor)
+    executor = executor or defaultExecutor
+
+    assert(type(executor) == "function", "An executor must be a callable")
+
     local state = {
-        listeners = {}
+        listeners = {},
+        executor = executor
     }
 
     self.__index = self
@@ -109,7 +115,7 @@ function Dispatcher:dispatch(name, event)
     local listeners = self:getListeners(name)
 
     for _, listener in pairs(listeners) do
-        listener(event)
+        self.executor(listener, event)
 
         if type(event) == "table" and event.isPropagationStopped then
             break

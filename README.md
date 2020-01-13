@@ -105,6 +105,37 @@ local listener = function(event)
 end
 ```
 
+### Executors
+
+An executor is responsible for calling your listeners. This library provides two
+different implementations.
+
+* `direct`: Listeners will be called directly. This means that any `error`
+that is thrown inside of a listener immediately bubbles up and stops the
+execution of other registered listeners.
+* `protected`: Listeners will be called with `pcall` which means that all of
+the registered listeners will be called, even if a preceding one errors on the way.
+
+By default, the `Dispatcher` uses the `direct` executor. You can easily provided
+your own executor as a callable to a new dispatcher object.
+
+```lua
+local Dispatcher = require "event-dispatcher.Dispatcher"
+
+local directExecutor = require "event-dispatcher.Executor.direct"
+local protectedExecutor = require "event-dispatcher.Executor.protected"
+
+Dispatcher:new() -- Implicit use of a direct executor
+Dispatcher:new(directExecutor) -- Explicit use of a direct executor
+Dispatcher:new(protectedExecutor) -- Use a protected call
+
+-- ... or create an executor yourself
+Dispatcher:new(function(listener, event)
+    -- do some other work
+    listener(event)
+end)
+```
+
 ## License
 This library is licensed under the MIT license.
 See the complete license text in the `LICENSE` file
