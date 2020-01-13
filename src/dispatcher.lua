@@ -70,6 +70,30 @@ function Dispatcher:removeListener(eventName, listener)
     end
 end
 
+-- Remove all listeners for a given event
+--
+-- @param string eventName
+-- @param callable listener
+--
+-- @return nil
+function Dispatcher:removeListeners(eventName)
+    if self.listeners[eventName] == nil then
+        return
+    end
+
+    self.listeners[eventName] = {}
+end
+
+-- Remove all listeners from the dispatcher
+--
+-- @param string eventName
+-- @param callable listener
+--
+-- @return nil
+function Dispatcher:removeAllListeners()
+    self.listeners = {}
+end
+
 -- Get an ordered list of listeners listening to a specific event
 --
 -- @param string eventName

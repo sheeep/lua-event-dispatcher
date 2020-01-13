@@ -65,6 +65,49 @@ describe("Event dispatcher", function()
         assert.same(0, #dispatcher:getListeners("event-name"))
     end)
 
+    it("should be possible to remove all listeners for a given event", function()
+        local dispatcher = Dispatcher:new()
+
+        local listener1 = function() end
+        local listener2 = function() end
+
+        dispatcher:on("event-name", listener1)
+        dispatcher:on("event-name", listener2)
+
+        dispatcher:on("another-event", listener1)
+        dispatcher:on("another-event", listener2)
+
+        assert.same(2, #dispatcher:getListeners("event-name"))
+        assert.same(2, #dispatcher:getListeners("another-event"))
+
+        dispatcher:removeListeners("event-name")
+
+        assert.same(0, #dispatcher:getListeners("event-name"))
+        assert.same(2, #dispatcher:getListeners("another-event"))
+    end)
+
+
+    it("should be possible to remove all listeners", function()
+        local dispatcher = Dispatcher:new()
+
+        local listener1 = function() end
+        local listener2 = function() end
+
+        dispatcher:on("event-name", listener1)
+        dispatcher:on("event-name", listener2)
+
+        dispatcher:on("another-event", listener1)
+        dispatcher:on("another-event", listener2)
+
+        assert.same(2, #dispatcher:getListeners("event-name"))
+        assert.same(2, #dispatcher:getListeners("another-event"))
+
+        dispatcher:removeAllListeners()
+
+        assert.same(0, #dispatcher:getListeners("event-name"))
+        assert.same(0, #dispatcher:getListeners("another-event"))
+    end)
+
     it("should be possible to dispatch an event object", function()
         local dispatcher = Dispatcher:new()
         local event1 = Event:new()
