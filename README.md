@@ -29,14 +29,14 @@ local listener = function (event)
 end
 
 -- Register this listener to a specific event
-dispatcher.addListener("event-name", listener)
+dispatcher:addListener("event-name", listener)
 
 -- Dispatch this event
 local event = Event:new({
   meep = 1
 })
 
-dispatcher.dispatch("event-name", event)
+dispatcher:dispatch("event-name", event)
 ```
 
 If for some reason you want to stop the propagation of the event
