@@ -1,9 +1,9 @@
 package = "lua-event-dispatcher"
-version = "0.1-0"
+version = "0.2-0"
 
 source = {
     url = "git://github.com/sheeep/lua-event-dispatcher",
-    tag = "v0.1"
+    tag = "v0.2"
 }
 
 description = {
