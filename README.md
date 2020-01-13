@@ -14,7 +14,7 @@ Install `lua-event-dispatcher` through `luarocks`.
 $ luarocks install lua-event-dispatcher
 ```
 
-## Usage
+## Documentation
 
 Usage examples can be found in the `spec/` folder in form of tests.
 
