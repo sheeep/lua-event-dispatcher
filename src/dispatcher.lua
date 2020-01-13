@@ -24,16 +24,6 @@ end
 -- @param callable listener
 --
 -- @return nil
-function Dispatcher:on(eventName, listener, priority)
-    self:addListener(eventName, listener, priority)
-end
-
--- Add a new listener to the dispatcher
---
--- @param string eventName
--- @param callable listener
---
--- @return nil
 function Dispatcher:addListener(eventName, listener, priority)
     -- set a default priority if nothing is provided
     priority = priority or 0
@@ -53,6 +43,14 @@ function Dispatcher:addListener(eventName, listener, priority)
 
     table.insert(list, listener)
 end
+
+-- Add a new listener to the dispatcher
+--
+-- @param string eventName
+-- @param callable listener
+--
+-- @return nil
+Dispatcher.on = Dispatcher.addListener
 
 -- Remove a specific listener from the table
 --
