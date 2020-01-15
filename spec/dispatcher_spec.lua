@@ -167,7 +167,6 @@ describe("Event dispatcher", function()
 
     it("should be possible to stop the event propagation event without an event object", function()
         local dispatcher = Dispatcher:new()
-        local a = 1
 
         local listener1 = spy.new(function(e)
             e:stopPropagation()
