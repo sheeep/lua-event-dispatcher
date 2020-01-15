@@ -155,6 +155,17 @@ dispatcher:removeListeners("event") -- Remove all listeners from an event
 dispatcher:removeAllListeners() -- Clear the dispatcher from all registered events
 ```
 
+## Testing
+
+This repository uses the [busted](https://olivinelabs.com/busted) framework to run its unit tests.
+Install it through `luarocks`.
+
+```
+$ luarocks install busted
+```
+
+Afterwards, you should be able to run `busted` from the project root.
+
 ## License
 This library is licensed under the MIT license.
 See the complete license text in the `LICENSE` file
