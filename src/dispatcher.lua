@@ -7,7 +7,7 @@ local Dispatcher = {}
 function Dispatcher:new(executor)
     executor = executor or defaultExecutor
 
-    assert(type(executor) == "function", "An executor must be a callable")
+    assert(type(executor) == "function" or type(executor) == "table", "An executor must be a callable")
 
     local state = {
         listeners = {},
@@ -28,7 +28,7 @@ function Dispatcher:addListener(eventName, listener, priority)
     -- set a default priority if nothing is provided
     priority = priority or 0
 
-    assert(type(listener) == "function", "A registered listener must be callable")
+    assert(type(listener) == "function" or type(listener) == "table", "A registered listener must be callable")
     assert(type(priority) == "number", "priority must be a number")
 
     if self.listeners[eventName] == nil then
