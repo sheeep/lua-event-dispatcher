@@ -21,4 +21,4 @@ script:
   - busted -c
 
 after_script:
-  - luacov-coveralls
+  - luacov-coveralls -r src
