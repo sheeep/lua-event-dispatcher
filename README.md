@@ -5,7 +5,7 @@ an event dispatcher and a generic event object, supports priorities,
 propagation stops and error safe executors.
 
 [![Build Status](https://travis-ci.com/sheeep/lua-event-dispatcher.svg?branch=master)](https://travis-ci.com/sheeep/lua-event-dispatcher)
-[![Coverage Status](https://coveralls.io/repos/github/sheeep/lua-event-dispatcher/badge.svg?branch=master)](https://coveralls.io/github/sheeep/lua-event-dispatcher?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/sheeep/lua-event-dispatcher/badge.svg?branch=master&cache-buster=1)](https://coveralls.io/github/sheeep/lua-event-dispatcher?branch=master)
 
 ## Installation
 
