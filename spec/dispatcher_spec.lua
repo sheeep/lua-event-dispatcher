@@ -148,17 +148,12 @@ describe("Event dispatcher", function()
 
     it("should be possible to stop the event propagation", function()
         local dispatcher = Dispatcher:new()
-        local event = Event:new({
-            number = 0
-        })
+        local event = Event:new()
 
-        local listener1 = function(e)
-            e.data.number = e.data.number + 1
+        local listener1 = spy.new(function(e)
             e:stopPropagation()
-        end
-        local listener2 = function(e)
-            e.data.number = e.data.number + 3
-        end
+        end)
+        local listener2 = spy.new(function() end)
 
         dispatcher:on("event-name", listener1)
         dispatcher:on("event-name", listener2)
@@ -166,7 +161,8 @@ describe("Event dispatcher", function()
 
         dispatcher:dispatch("event-name", event)
 
-        assert.same(1, event.data.number)
+        assert.spy(listener1).was.called()
+        assert.spy(listener2).was_not.called()
     end)
 
     it("should be possible to stop the event propagation event without an event object", function()
