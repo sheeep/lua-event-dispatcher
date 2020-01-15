@@ -13,12 +13,12 @@ before_install:
   - hererocks lua_install --$LUA -r latest
   - source lua_install/bin/activate
   - luarocks install busted
-  - luarocks install cluacov
   - luarocks install luacheck
+  - luarocks install luacov-coveralls
 
 script:
   - luacheck src spec
   - busted -c
 
 after_script:
-  - luacov
+  - luacov-coveralls
