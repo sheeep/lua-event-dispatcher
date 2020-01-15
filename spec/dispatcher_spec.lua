@@ -281,4 +281,17 @@ describe("Event dispatcher", function()
             dispatcher:addListener("event-name", function() end, "NaN")
         end, "priority must be a number")
     end)
+
+    it("should do nothing if removeListeners is called without an eventName", function()
+        local dispatcher = Dispatcher:new()
+
+        local listener = function() end
+
+        dispatcher:on("event-name", listener)
+        dispatcher:on("event-name", listener)
+
+        dispatcher:removeListeners()
+
+        assert.same(2, #dispatcher:getListeners("event-name"))
+    end)
 end)
