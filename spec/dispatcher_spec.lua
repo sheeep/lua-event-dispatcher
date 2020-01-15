@@ -169,21 +169,18 @@ describe("Event dispatcher", function()
         local dispatcher = Dispatcher:new()
         local a = 1
 
-        local listener1 = function(e)
+        local listener1 = spy.new(function(e)
             e:stopPropagation()
-
-            a = 2
-        end
-        local listener2 = function()
-            a = 3
-        end
+        end)
+        local listener2 = spy.new(function() end)
 
         dispatcher:on("event-name", listener1)
         dispatcher:on("event-name", listener2)
 
         dispatcher:dispatch("event-name")
 
-        assert.same(2, a)
+        assert.spy(listener1).was.called()
+        assert.spy(listener2).was_not.called()
     end)
 
     it("should be possible to have multiple dispatchers (event busses)", function()
@@ -201,17 +198,13 @@ describe("Event dispatcher", function()
 
     it("should be possible to use the method :on instead of :addListener", function()
         local dispatcher = Dispatcher:new()
-        local event = Event:new({
-            number = 0
-        })
+        local event = Event:new()
+        local listener = spy.new(function() end)
 
-        dispatcher:on("event-name", function(e)
-            e.data.number = 1
-        end)
-
+        dispatcher:on("event-name", listener)
         dispatcher:dispatch("event-name", event)
 
-        assert.same(1, event.data.number)
+        assert.spy(listener).was.called()
     end)
 
     it("should be possible to run listeners in order", function()
